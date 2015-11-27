@@ -69,6 +69,8 @@
         [self.allZipCodes addObject:zip];
     }
     
+    NSLog(@"Queens ZipCodes count: %ld", queensZipCodes.count);
+    
     //StatenIsland Zip Codes
     
     NSArray *statenIslandZipCodes = @[@"10301",
@@ -95,6 +97,8 @@
     }
     
     NSLog(@"Self.allZipCodes.count: %ld (QNS and SI)", self.allZipCodes.count);
+    
+    NSLog(@"SI ZipCodes count: %ld", statenIslandZipCodes.count);
     
     NSString *brooklyn = @"Brooklyn";
     NSString *manhattan = @"New%20York";
@@ -123,10 +127,12 @@
                 
                 [self.allZipCodes addObject:zipCode];
             }
-            
-            NSLog(@"self.allZipCodes.count: %ld(QNS, SI, BK)", self.allZipCodes.count);
         }
     }];
+    
+    NSLog(@"self.allZipCodes.count: %ld(QNS, SI, BK)", self.allZipCodes.count);
+    
+    
     
     //Manhattan Zip Codes
     
@@ -146,10 +152,11 @@
                 [self.allZipCodes addObject:zipCode];
             }
             
-            NSLog(@"self.allZipCodes.count: %ld(QNS, SI, BK, MAN)", self.allZipCodes.count);
         }
         
     }];
+    
+    NSLog(@"self.allZipCodes.count: %ld(QNS, SI, BK, MAN)", self.allZipCodes.count);
     
     //Bronx Zip Codes
     
@@ -170,10 +177,11 @@
                 
             }
             
-            NSLog(@"self.allZipCodes.count: %ld (ALL)", self.allZipCodes.count);
         }
         
     }];
+    
+    NSLog(@"self.allZipCodes.count: %ld (ALL)", self.allZipCodes.count);
     
    
 }

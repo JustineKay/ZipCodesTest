@@ -47,9 +47,7 @@ MKMapViewDelegate
     self.mapView.showsCompass = NO;
     self.mapView.mapType = MKMapTypeHybrid;
     
-    if (self.zipCodesOfNYC == nil) {
-        
-        self.zipCodesOfNYC = [[NSMutableArray alloc] init];
+    if (self.zipCodeData == nil) {
         
         self.zipCodeData = [[ZipCodeData alloc] init];
         [self.zipCodeData initializeData];
@@ -115,8 +113,6 @@ MKMapViewDelegate
     
     
     for (ZipCode *zip in self.zipCodeData.allZipCodes){
-        
-        //[self.zipCodesOfNYC addObject:zip];
         
         if ([zip.number isEqualToString:userLocationZipCode]) {
             
