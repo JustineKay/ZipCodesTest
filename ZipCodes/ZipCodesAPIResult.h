@@ -12,5 +12,8 @@
 
 @property (nonatomic) NSString *borough;
 @property (nonatomic) NSString *zipCode;
+@property (nonatomic) NSDictionary *boroughZipCodes;
+
+-(instancetype)initWithJSON: (NSDictionary *)json;
 
 @end

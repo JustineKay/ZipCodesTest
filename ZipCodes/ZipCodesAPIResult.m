@@ -17,7 +17,7 @@
     if (self = [super init]){
         
         //self.borough =
-        //self.zipCode = 
+        //self.zipCodes =
         
 //        self.dayOfWeek = [json[@"time"]integerValue];
 //        

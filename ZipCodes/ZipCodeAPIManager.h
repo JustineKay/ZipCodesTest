@@ -10,4 +10,8 @@
 
 @interface ZipCodeAPIManager : NSObject
 
++ (void)GETZipCodesWithCity: (NSString *)city
+                      state: (NSString *)state
+          CompletionHandler:(void(^)(id results))completionHandler;
+
 @end

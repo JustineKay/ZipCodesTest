@@ -6,27 +6,27 @@
 //  Copyright © 2015 Justine Kay. All rights reserved.
 //
 
+#import <AFNetworking/AFNetworking.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "ViewController.h"
+#import "ZipCodeAPIManager.h"
+#import "ZipCodesAPIResult.h"
 
 @interface ViewController ()
 <
 CLLocationManagerDelegate,
-MKMapViewDelegate,
-UITextFieldDelegate
+MKMapViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (weak, nonatomic) IBOutlet UITextField *latitudeTextField;
-@property (weak, nonatomic) IBOutlet UITextField *longitudeTextField;
+
 @property (weak, nonatomic) IBOutlet UILabel *zipCodeLabel;
 
 @property (nonatomic) CLLocationManager *locationManager;
-@property (nonatomic) CLLocation *zipCodeCoordinates;
-@property (nonatomic) NSInteger latitude;
-@property (nonatomic) NSInteger longitude;
+
 @property (nonatomic) NSMutableArray *locations;
+@property (nonatomic) NSMutableArray *zipCodesOfNYC;
 
 @end
 
@@ -42,17 +42,40 @@ UITextFieldDelegate
     self.mapView.showsCompass = NO;
     self.mapView.mapType = MKMapTypeHybrid;
     
+    NSString *brooklyn = @"Brooklyn";
+    NSString *ny = @"NY";
     
+    [ZipCodeAPIManager GETZipCodesWithCity:brooklyn state:ny CompletionHandler:^(id results) {
+        
+        if ([results isKindOfClass:[NSDictionary class]]) {
+            
+            self.zipCodesOfNYC = [[NSMutableArray alloc]init];
+            
+            //NSLog(@"zipcodes: %@", results);
+            
+            NSArray *zipCodes = results[@"zip_codes"];
+            
+            //NSLog(@"searchResults: %@", zipCodes);
+            
+            for (NSString *result in zipCodes){
+                
+                ZipCodesAPIResult *zipCode = [[ZipCodesAPIResult alloc] initWithJSON:results];
+                zipCode.borough = brooklyn;
+                zipCode.zipCode = result;
+                
+                
+                [self.zipCodesOfNYC addObject:zipCode];
+                
+                NSLog(@"self.zipcodesOfNYC: %@", self.zipCodesOfNYC);
+            }
+        }
+    }];
 }
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField{
+- (IBAction)trackLocationButtonTapped:(UIButton *)sender {
     
-    self.latitude = self.latitudeTextField.text.integerValue;
-    self.longitude = self.longitudeTextField.text.integerValue;
-    
+    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
     [self startLocationUpdates];
-    
-    return YES;
 }
 
 - (void)startLocationUpdates {
@@ -76,18 +99,8 @@ UITextFieldDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    //    CLLocation *currentLocation;
-    //    currentLocation = [locations objectAtIndex:0];
-    //    [self.locationManager stopUpdatingLocation];
     
     for (CLLocation *newLocation in locations) {
-        
-//        if (self.locations == nil) {
-//            
-//            self.locations = [NSMutableArray array];
-//        }
-//        
-//        [self.locations addObject:newLocation];
         
         CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
         [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error)
@@ -97,9 +110,7 @@ UITextFieldDelegate
                  CLPlacemark *placemark = [placemarks objectAtIndex:0];
                  NSLog(@"\nCurrent Location Detected\n");
                  NSLog(@"placemark %@",placemark);
-                 //             NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
-                 //
-                 //             NSString *Address = [[NSString alloc]initWithString:locatedAt];
+                
                  NSString *zipCode = [[NSString alloc]initWithString:placemark.postalCode];
                  NSLog(@"%@",zipCode);
                  self.zipCodeLabel.text = zipCode;
