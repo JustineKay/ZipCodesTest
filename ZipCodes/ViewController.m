@@ -12,6 +12,7 @@
 #import "ViewController.h"
 #import "ZipCodeAPIManager.h"
 #import "ZipCode.h"
+#import "ZipCodeData.h"
 
 @interface ViewController ()
 <
@@ -28,6 +29,10 @@ MKMapViewDelegate
 @property (nonatomic) NSMutableArray *locations;
 @property (nonatomic) NSMutableArray *zipCodesOfNYC;
 
+@property (nonatomic) ZipCodeData *zipCodeData;
+
+@property (nonatomic) BOOL isNYC;
+
 @end
 
 @implementation ViewController
@@ -42,78 +47,15 @@ MKMapViewDelegate
     self.mapView.showsCompass = NO;
     self.mapView.mapType = MKMapTypeHybrid;
     
-    NSString *brooklyn = @"Brooklyn";
-    NSString *manhattan = @"New%20York";
-    NSString *bronx = @"Bronx";
-    NSString *ny = @"NY";
-    
-    [ZipCodeAPIManager GETZipCodesWithCity:brooklyn state:ny CompletionHandler:^(id results) {
+    if (self.zipCodesOfNYC == nil) {
         
-        if ([results isKindOfClass:[NSDictionary class]]) {
-            
-            self.zipCodesOfNYC = [[NSMutableArray alloc]init];
-            
-            //NSLog(@"zipcodes: %@", results);
-            
-            NSArray *zipCodes = results[@"zip_codes"];
-            
-            //NSLog(@"searchResults: %@", zipCodes);
-            
-            for (NSString *result in zipCodes){
-                
-                ZipCode *zipCode = [[ZipCode alloc] init];
-                zipCode.borough = brooklyn;
-                zipCode.zipCode = result;
-
-                [self.zipCodesOfNYC addObject:zipCode];
-            }
-            
-            NSLog(@"self.zipcodesOfNYC.count: %ld", self.zipCodesOfNYC.count);
-        }
-    }];
-    
-    [ZipCodeAPIManager GETZipCodesWithCity:manhattan state:ny CompletionHandler:^(id results) {
-        if ([results isKindOfClass:[NSDictionary class]]) {
-            
-            NSArray *zipCodes = results[@"zip_codes"];
-            
-            //NSLog(@"searchResults: %@", zipCodes);
-            
-            for (NSString *result in zipCodes){
-                
-                ZipCode *zipCode = [[ZipCode alloc] init];
-                zipCode.borough = @"Manhattan";
-                zipCode.zipCode = result;
-                
-                [self.zipCodesOfNYC addObject:zipCode];
-            }
-            
-            NSLog(@"self.zipcodesOfNYC.count: %ld", self.zipCodesOfNYC.count);
-        }
-
-    }];
-    
-    [ZipCodeAPIManager GETZipCodesWithCity:bronx state:ny CompletionHandler:^(id results) {
-        if ([results isKindOfClass:[NSDictionary class]]) {
-            
-            NSArray *zipCodes = results[@"zip_codes"];
-            
-            //NSLog(@"searchResults: %@", zipCodes);
-            
-            for (NSString *result in zipCodes){
-                
-                ZipCode *zipCode = [[ZipCode alloc] init];
-                zipCode.borough = bronx;
-                zipCode.zipCode = result;
-                
-                [self.zipCodesOfNYC addObject:zipCode];
-                
-            }
-            
-            NSLog(@"self.zipcodesOfNYC.count: %ld", self.zipCodesOfNYC.count);
-        }
+        self.zipCodesOfNYC = [[NSMutableArray alloc] init];
         
-    }];
+        self.zipCodeData = [[ZipCodeData alloc] init];
+        [self.zipCodeData initializeData];
+        
+    }
+    
 }
 
 - (IBAction)trackLocationButtonTapped:(UIButton *)sender {
@@ -155,9 +97,11 @@ MKMapViewDelegate
                  NSLog(@"\nCurrent Location Detected\n");
                  NSLog(@"placemark %@",placemark);
                 
-                 NSString *zipCode = [[NSString alloc]initWithString:placemark.postalCode];
-                 NSLog(@"%@",zipCode);
-                 self.zipCodeLabel.text = zipCode;
+                 NSString *userLocationZipCode = [[NSString alloc]initWithString:placemark.postalCode];
+                 NSLog(@"%@",userLocationZipCode);
+                 self.zipCodeLabel.text = userLocationZipCode;
+                 
+                 [self verifyZipCode:userLocationZipCode];
              }
              else
              {
@@ -165,6 +109,34 @@ MKMapViewDelegate
              }
          }];
     }
+}
+
+-(void)verifyZipCode: (NSString *)userLocationZipCode{
+    
+    
+    for (ZipCode *zip in self.zipCodeData.allZipCodes){
+        
+        //[self.zipCodesOfNYC addObject:zip];
+        
+        if ([zip.number isEqualToString:userLocationZipCode]) {
+            
+            NSLog(@"User is in NYC, %@", zip.borough);
+            
+            self.isNYC = YES;
+            
+        }else {
+            
+            NSLog(@"User is not in NYC");
+            
+            self.isNYC = NO;
+            
+            break;
+        }
+        
+    }
+    
+    NSLog(@"self.zipCodeData.allZipcodes: %@", self.zipCodeData.allZipCodes);
+    
 }
 
 @end

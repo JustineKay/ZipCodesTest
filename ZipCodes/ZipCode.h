@@ -11,6 +11,6 @@
 @interface ZipCode : NSObject
 
 @property (nonatomic) NSString *borough;
-@property (nonatomic) NSString *zipCode;
+@property (nonatomic) NSString *number;
 
 @end

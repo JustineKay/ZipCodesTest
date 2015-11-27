@@ -11,6 +11,8 @@
 
 @interface ZipCodeData : NSObject
 
-@property (nonatomic) NSArray *allZipCodes;
+@property (nonatomic) NSMutableArray *allZipCodes;
+
+-(void) initializeData;
 
 @end
