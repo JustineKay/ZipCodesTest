@@ -13,7 +13,8 @@
 @interface ViewController ()
 <
 CLLocationManagerDelegate,
-MKMapViewDelegate
+MKMapViewDelegate,
+UITextFieldDelegate
 >
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -22,6 +23,10 @@ MKMapViewDelegate
 @property (weak, nonatomic) IBOutlet UILabel *zipCodeLabel;
 
 @property (nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) CLLocation *zipCodeCoordinates;
+@property (nonatomic) NSInteger latitude;
+@property (nonatomic) NSInteger longitude;
+@property (nonatomic) NSMutableArray *locations;
 
 @end
 
@@ -38,6 +43,16 @@ MKMapViewDelegate
     self.mapView.mapType = MKMapTypeHybrid;
     
     
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    self.latitude = self.latitudeTextField.text.integerValue;
+    self.longitude = self.longitudeTextField.text.integerValue;
+    
+    [self startLocationUpdates];
+    
+    return YES;
 }
 
 - (void)startLocationUpdates {
@@ -57,6 +72,44 @@ MKMapViewDelegate
     
     self.locationManager.allowsBackgroundLocationUpdates = YES;
     [self.locationManager startUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    //    CLLocation *currentLocation;
+    //    currentLocation = [locations objectAtIndex:0];
+    //    [self.locationManager stopUpdatingLocation];
+    
+    for (CLLocation *newLocation in locations) {
+        
+//        if (self.locations == nil) {
+//            
+//            self.locations = [NSMutableArray array];
+//        }
+//        
+//        [self.locations addObject:newLocation];
+        
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
+        [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error)
+         {
+             if (!(error))
+             {
+                 CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                 NSLog(@"\nCurrent Location Detected\n");
+                 NSLog(@"placemark %@",placemark);
+                 //             NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
+                 //
+                 //             NSString *Address = [[NSString alloc]initWithString:locatedAt];
+                 NSString *zipCode = [[NSString alloc]initWithString:placemark.postalCode];
+                 NSLog(@"%@",zipCode);
+                 self.zipCodeLabel.text = zipCode;
+             }
+             else
+             {
+                 NSLog(@"Geocode failed with error %@", error); // Error handling must required
+             }
+         }];
+    }
 }
 
 @end

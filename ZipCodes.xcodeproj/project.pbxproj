@@ -11,6 +11,7 @@
 		6B7A88BC1C08AF9700ED1035 /* ZipCodesAPIResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B7A88BB1C08AF9700ED1035 /* ZipCodesAPIResult.m */; };
 		6B7A88BE1C08B35400ED1035 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B7A88BD1C08B35400ED1035 /* MapKit.framework */; };
 		6B7A88C01C08B36300ED1035 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B7A88BF1C08B36300ED1035 /* CoreLocation.framework */; };
+		6B7A88C31C08B93100ED1035 /* ZipCodeAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B7A88C21C08B93100ED1035 /* ZipCodeAPIManager.m */; };
 		6BAD69D21C08AB9300B1B9D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAD69D11C08AB9300B1B9D3 /* main.m */; };
 		6BAD69D51C08AB9300B1B9D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAD69D41C08AB9300B1B9D3 /* AppDelegate.m */; };
 		6BAD69D81C08AB9300B1B9D3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAD69D71C08AB9300B1B9D3 /* ViewController.m */; };
@@ -25,6 +26,8 @@
 		6B7A88BB1C08AF9700ED1035 /* ZipCodesAPIResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipCodesAPIResult.m; sourceTree = "<group>"; };
 		6B7A88BD1C08B35400ED1035 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		6B7A88BF1C08B36300ED1035 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		6B7A88C11C08B93100ED1035 /* ZipCodeAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipCodeAPIManager.h; sourceTree = "<group>"; };
+		6B7A88C21C08B93100ED1035 /* ZipCodeAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipCodeAPIManager.m; sourceTree = "<group>"; };
 		6BAD69CD1C08AB9300B1B9D3 /* ZipCodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZipCodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BAD69D11C08AB9300B1B9D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6BAD69D31C08AB9300B1B9D3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -95,6 +98,8 @@
 			children = (
 				6BAD69D31C08AB9300B1B9D3 /* AppDelegate.h */,
 				6BAD69D41C08AB9300B1B9D3 /* AppDelegate.m */,
+				6B7A88C11C08B93100ED1035 /* ZipCodeAPIManager.h */,
+				6B7A88C21C08B93100ED1035 /* ZipCodeAPIManager.m */,
 				6B7A88BA1C08AF9700ED1035 /* ZipCodesAPIResult.h */,
 				6B7A88BB1C08AF9700ED1035 /* ZipCodesAPIResult.m */,
 				6BAD69D61C08AB9300B1B9D3 /* ViewController.h */,
@@ -246,6 +251,7 @@
 				6BAD69D81C08AB9300B1B9D3 /* ViewController.m in Sources */,
 				6BAD69D51C08AB9300B1B9D3 /* AppDelegate.m in Sources */,
 				6BAD69D21C08AB9300B1B9D3 /* main.m in Sources */,
+				6B7A88C31C08B93100ED1035 /* ZipCodeAPIManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
