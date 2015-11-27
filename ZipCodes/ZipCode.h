@@ -1,6 +1,6 @@
 //
-//  ZipCodesAPIResult.h
-//  ZipCodes
+//  ZipCode.h
+//  ZipCode
 //
 //  Created by Justine Gartner on 11/27/15.
 //  Copyright © 2015 Justine Kay. All rights reserved.
@@ -8,12 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ZipCodesAPIResult : NSObject
+@interface ZipCode : NSObject
 
 @property (nonatomic) NSString *borough;
 @property (nonatomic) NSString *zipCode;
-@property (nonatomic) NSDictionary *boroughZipCodes;
-
--(instancetype)initWithJSON: (NSDictionary *)json;
 
 @end
