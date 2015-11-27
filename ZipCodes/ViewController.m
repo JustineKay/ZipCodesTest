@@ -118,6 +118,27 @@ MKMapViewDelegate
             
             NSLog(@"User is in NYC, %@", zip.borough);
             
+            
+            //For SeekNYC calculations
+            
+            //Accummulate a count for each borough
+            if ([zip.borough isEqualToString:@"Brooklyn"]) {
+                //ADD to percentag of BK uncovered
+            }else if ([zip.borough isEqualToString:@"Manhattan"]){
+                
+                //Add to percentageOfMANUncovered
+            }else if ([zip.borough isEqualToString:@"Staten Island"]){
+                
+                //add to percentageOfSIUncovered
+            }else if ([zip.borough isEqualToString:@"Bronx"]) {
+                
+                //add to percentageOfBRXUncovered
+            }else if ([zip.borough isEqualToString:@"Queens"]){
+                
+                //add to percentageOfQNSUncovered
+            }
+                
+            
             self.isNYC = YES;
             
         }else {
